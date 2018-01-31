@@ -1,45 +1,54 @@
-package org.superbiz.moviefun.moviesapi;
+package org.superbiz.moviefun;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.superbiz.moviefun.albums.Album;
-import org.superbiz.moviefun.albums.AlbumsBean;
 import org.superbiz.moviefun.albumsapi.AlbumFixtures;
+import org.superbiz.moviefun.albumsapi.AlbumInfo;
+import org.superbiz.moviefun.albumsapi.AlbumsClient;
+import org.superbiz.moviefun.moviesapi.MovieFixtures;
+import org.superbiz.moviefun.moviesapi.MovieInfo;
+import org.superbiz.moviefun.moviesapi.MoviesClient;
 
 import java.util.Map;
 
 @Controller
 public class HomeController {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     private final MoviesClient moviesClient;
-    private final AlbumsBean albumsBean;
+    private final AlbumsClient albumsClient;
     private final MovieFixtures movieFixtures;
     private final AlbumFixtures albumFixtures;
 
-    public HomeController(MoviesClient moviesClient, AlbumsBean albumsBean, MovieFixtures movieFixtures, AlbumFixtures albumFixtures) {
+    public HomeController(MoviesClient moviesClient, AlbumsClient albumsClient, MovieFixtures movieFixtures, AlbumFixtures albumFixtures) {
         this.moviesClient = moviesClient;
-        this.albumsBean = albumsBean;
+        this.albumsClient = albumsClient;
         this.movieFixtures = movieFixtures;
         this.albumFixtures = albumFixtures;
     }
 
     @GetMapping("/")
     public String index() {
+        logger.info("HomeController:index()");
         return "index";
     }
 
     @GetMapping("/setup")
     public String setup(Map<String, Object> model) {
+        logger.info("HomeController:setup()");
         for (MovieInfo movie : movieFixtures.load()) {
             moviesClient.addMovie(movie);
         }
 
-        for (Album album : albumFixtures.load()) {
-            albumsBean.addAlbum(album);
+        for (AlbumInfo album : albumFixtures.load()) {
+            albumsClient.addAlbum(album);
         }
 
         model.put("movies", moviesClient.getMovies());
-        model.put("albums", albumsBean.getAlbums());
+        model.put("albums", albumsClient.getAlbums());
 
         return "setup";
     }

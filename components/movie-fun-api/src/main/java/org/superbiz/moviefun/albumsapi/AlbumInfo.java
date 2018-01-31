@@ -1,8 +1,10 @@
-package org.superbiz.moviefun.moviesapi;
+package org.superbiz.moviefun.albumsapi;
 
-public class AlbumInfo {
+import java.io.Serializable;
 
-    private Long id;
+public class AlbumInfo implements Serializable {
+
+    private long id;
 
     private String artist;
     private String title;
@@ -19,15 +21,13 @@ public class AlbumInfo {
         this.rating = rating;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
-
-
 
     public String getArtist() {
         return artist;
@@ -61,9 +61,9 @@ public class AlbumInfo {
         this.rating = rating;
     }
 
-    public boolean hasId() {
-        return id != null;
-    }
+    //public boolean hasId() {
+        //return id != null;
+    //}
 
     public boolean isEquivalent(AlbumInfo other) {
         if (year != other.year) return false;
@@ -78,6 +78,30 @@ public class AlbumInfo {
         return true;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        AlbumInfo albumInfo = (AlbumInfo) o;
+//
+//        if (year != albumInfo.year) return false;
+//        if (rating != albumInfo.rating) return false;
+//        //if (id != null ? !id.equals(albumInfo.id) : albumInfo.id != null) return false;
+//        if (artist != null ? !artist.equals(albumInfo.artist) : albumInfo.artist != null) return false;
+//        return title != null ? title.equals(albumInfo.title) : albumInfo.title == null;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        //int result = id != null ? id.hashCode() : 0;
+//        result = 31 * result + (artist != null ? artist.hashCode() : 0);
+//        result = 31 * result + (title != null ? title.hashCode() : 0);
+//        result = 31 * result + year;
+//        result = 31 * result + rating;
+//        return result;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,16 +109,16 @@ public class AlbumInfo {
 
         AlbumInfo albumInfo = (AlbumInfo) o;
 
+        if (id != albumInfo.id) return false;
         if (year != albumInfo.year) return false;
         if (rating != albumInfo.rating) return false;
-        if (id != null ? !id.equals(albumInfo.id) : albumInfo.id != null) return false;
         if (artist != null ? !artist.equals(albumInfo.artist) : albumInfo.artist != null) return false;
         return title != null ? title.equals(albumInfo.title) : albumInfo.title == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (artist != null ? artist.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + year;

@@ -15,6 +15,8 @@ package org.superbiz.moviefun.albums; /**
  * limitations under the License.
  */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +26,17 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 @Repository
-public class AlbumsBean {
+public class AlbumsRepository {
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Transactional
     public void addAlbum(Album album) {
+        //if(!entityManager.contains(album))
+            //entityManager.merge(album);
+
         entityManager.persist(album);
     }
 
@@ -46,7 +52,16 @@ public class AlbumsBean {
 
     @Transactional
     public void deleteAlbum(Album album) {
+        logger.info(("AlbumsRepo:deleteAlbum"));
+        if(!entityManager.contains(album)){
+            logger.info(("Album not present in persistenceContext"));
+            entityManager.merge(album);
+            logger.info(("Album merged to persistenceContext"));
+        }
+        logger.info(("Remove Album..."));
         entityManager.remove(album);
+        logger.info(("Album removed."));
+
     }
 
     @Transactional

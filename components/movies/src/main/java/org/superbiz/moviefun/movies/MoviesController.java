@@ -1,5 +1,7 @@
 package org.superbiz.moviefun.movies;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/movies")
 public class MoviesController {
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     private MoviesRepository moviesRepository;
 
@@ -16,11 +19,13 @@ public class MoviesController {
 
     @PostMapping
     public void addMovie(@RequestBody Movie movie) {
+        logger.info("MoviesController:addMovie()");
         moviesRepository.addMovie(movie);
     }
 
     @DeleteMapping("/{movieId}")
     public void deleteMovieId(@PathVariable Long movieId) {
+        logger.info("MoviesController:deleteMovieId({})", movieId);
         moviesRepository.deleteMovieId(movieId);
     }
 
@@ -29,6 +34,7 @@ public class MoviesController {
             @RequestParam(name = "field", required = false) String field,
             @RequestParam(name = "key", required = false) String key
     ) {
+        logger.info("MoviesController:count({}/{})", field, key);
         if (field != null && key != null) {
             return moviesRepository.count(field, key);
         } else {
@@ -43,6 +49,7 @@ public class MoviesController {
             @RequestParam(name = "start", required = false) Integer start,
             @RequestParam(name = "pageSize", required = false) Integer pageSize
     ) {
+        logger.info("MoviesController:find({}/{}/{}/{})", field, key, start, pageSize);
         if (field != null && key != null) {
             return moviesRepository.findRange(field, key, start, pageSize);
         } else if (start != null && pageSize != null) {

@@ -13,3 +13,9 @@ spring:
 logging.level:
   root: WARN
   org.superbiz.moviefun: DEBUG
+
+s3:
+  endpointUrl: http://127.0.0.1:9000
+  accessKey: V06PNYCRK6BYW2EFRBVG
+  secretKey: x1RFtydVP9W9PnP3mc/oWUT8ytvc+8xr/6uJdtle
+  bucketName: moviefun

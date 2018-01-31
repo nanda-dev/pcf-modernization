@@ -1,7 +1,8 @@
-package org.superbiz.moviefun.moviesapi;
+package org.superbiz.moviefun.albumsapi;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestOperations;
+import org.superbiz.moviefun.albumsapi.AlbumInfo;
 
 import java.util.List;
 
