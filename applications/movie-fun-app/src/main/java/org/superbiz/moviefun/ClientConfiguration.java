@@ -15,11 +15,11 @@ public class ClientConfiguration {
 
     @Bean
     public AlbumsClient albumsClient(RestOperations restOperations) {
-        return new AlbumsClient("http://album-service/albums", restOperations);
+        return new AlbumsClient(albumsUrl, restOperations);
     }
 
     @Bean
     public MoviesClient moviesClient(RestOperations restOperations) {
-        return new MoviesClient("http://movie-service/movies", restOperations);
+        return new MoviesClient(moviesUrl, restOperations);
     }
 }
