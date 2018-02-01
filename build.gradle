@@ -92,6 +92,7 @@ task teardownPcfEnv {
             "cf delete-service -f movies-db",
             "cf delete-service -f albums-db",
             "cf delete-service -f movie-fun-sso",
+            "cf delete-service -f movie-fun-registry"
         ].each { println it.execute().text }
     }
 }
