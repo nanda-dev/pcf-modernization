@@ -1,5 +1,7 @@
 package org.superbiz.moviefun.moviesapi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -9,6 +11,7 @@ import java.util.List;
 import static org.springframework.http.HttpMethod.GET;
 
 public class MoviesClient {
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     private String moviesUrl;
     private RestOperations restOperations;
@@ -22,6 +25,7 @@ public class MoviesClient {
     }
 
     public void addMovie(MovieInfo movie) {
+        logger.info("AddMovie {} to url: {}", movie.getTitle(), moviesUrl);
         restOperations.postForEntity(moviesUrl, movie, MovieInfo.class);
     }
 
@@ -35,7 +39,7 @@ public class MoviesClient {
 
 
     public int count(String field, String key) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(moviesUrl + "/count")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(moviesUrl + "/count")
             .queryParam("field", field)
             .queryParam("key", key);
 
@@ -44,7 +48,7 @@ public class MoviesClient {
 
 
     public List<MovieInfo> findAll(int start, int pageSize) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(moviesUrl)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(moviesUrl)
             .queryParam("start", start)
             .queryParam("pageSize", pageSize);
 
@@ -52,7 +56,7 @@ public class MoviesClient {
     }
 
     public List<MovieInfo> findRange(String field, String key, int start, int pageSize) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(moviesUrl)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(moviesUrl)
             .queryParam("field", field)
             .queryParam("key", key)
             .queryParam("start", start)
@@ -64,4 +68,13 @@ public class MoviesClient {
     public List<MovieInfo> getMovies() {
         return restOperations.exchange(moviesUrl, GET, null, movieListType).getBody();
     }
+
+    private String getUrlString(String uri) {
+        logger.info("MOVIES::GetURLString for: {}", uri);
+        String url = "https:" + uri;
+        logger.info("URLString: {}", url);
+        return url;
+    }
+
+
 }
