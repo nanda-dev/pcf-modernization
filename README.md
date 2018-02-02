@@ -50,3 +50,9 @@ Run migrations on the PCF environment which you're logged in to with
 ```bash
 CF_MIGRATE=true ./gradlew cfMigrate
 ```
+
+
+"access_key_id": "AKIAJV7ZVDJJCC2AFXVA",
+     "bucket": "cf-04a307a8-36bb-4345-8e61-17d02b8e493b",
+     "region": "ap-southeast-1",
+     "secret_access_key": "FCXQwbXvxjuYdxq0yHZArF1oAcYJRAv3RB8/nAla"
