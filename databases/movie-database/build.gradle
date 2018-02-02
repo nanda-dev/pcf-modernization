@@ -45,3 +45,7 @@ task cfMigrate(type: FlywayMigrateTask, dependsOn: openTunnel) {
 }
 
 cfMigrate.finalizedBy closeTunnel
+
+//task cfMyPrint {
+//    println 'test task2'
+//}

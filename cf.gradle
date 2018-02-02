@@ -96,3 +96,8 @@ deploy.mustRunAfter checkCfServices
 setEnvVars.mustRunAfter deploy
 
 task resetPcfEnv(dependsOn: [teardownPcfEnv, setupPcfEnv, checkCfServices, deploy, setEnvVars])
+
+//task testTask {
+//    println 'first task'
+//
+//}

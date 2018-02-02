@@ -4,19 +4,19 @@ instances: 1
 services:
 - movie-fun-sso
 - movie-fun-registry
-env:
-  TRUST_CERTS: api.cfapps-01.haas-66.pez.pivotal.io,basic-sso.login.run-01.haas-66.pez.pivotal.io
+#env:
+#  TRUST_CERTS: api.cfapps-01.haas-66.pez.pivotal.io,basic-sso.login.run-01.haas-66.pez.pivotal.io
 applications:
 - name: album-service
   path: applications/album-service/build/libs/album-service-1.1.0-SNAPSHOT.jar
   services:
-  - album-database
+  - albums-db
   env:
     GRANT_TYPE: client_credentials
 - name: movie-service
   path: applications/movie-service/build/libs/movie-service-1.1.0-SNAPSHOT.jar
   services:
-  - movie-database
+  - movies-db
   env:
     GRANT_TYPE: client_credentials
 - name: movie-fun-app
